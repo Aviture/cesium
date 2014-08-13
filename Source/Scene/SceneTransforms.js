@@ -176,9 +176,10 @@ define([
         // Perspective divide to transform from clip coordinates to normalized device coordinates
         Cartesian3.divideByScalar(position, position.w, positionNDC);
 
-        // Assuming viewport takes up the entire canvas...
-        viewport.width = canvas.clientWidth;
-        viewport.height = canvas.clientHeight;
+        var bounding = canvas.getBoundingClientRect();
+        viewport.width = bounding.width;
+        viewport.height = bounding.height;
+
         Matrix4.computeViewportTransformation(viewport, 0.0, 1.0, viewportTransform);
 
         // Viewport transform to transform from clip coordinates to window coordinates
@@ -210,8 +211,9 @@ define([
      */
     SceneTransforms.transformWindowToDrawingBuffer = function(scene, windowPosition, result) {
         var canvas = scene.canvas;
-        var xScale = scene.drawingBufferWidth / canvas.clientWidth;
-        var yScale = scene.drawingBufferHeight / canvas.clientHeight;
+        var bounding = canvas.getBoundingClientRect();
+        var xScale = scene.drawingBufferWidth / bounding.width;
+        var yScale = scene.drawingBufferHeight / bounding.height;
         return Cartesian2.fromElements(windowPosition.x * xScale, windowPosition.y * yScale, result);
     };
 
