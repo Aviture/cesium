@@ -474,7 +474,7 @@ import CesiumMath from './Math.js';
      * @returns {Number} The converted number.
      */
     Color.floatToByte = function(number) {
-        return Math.round(number * 255.0);
+        return Math.round(number * 255.0) | 0;
     };
 
     /**
